@@ -57,7 +57,6 @@
                 </div>
                 <?= (isset($_SESSION['email'])) ? $_SESSION['email'] : ''; ?> 
                 <?php unset($_SESSION['email']); ?>
-              
               <br>
               <label for="password">Password</label>
               <div class="form-group last mb-3">
