@@ -27,6 +27,5 @@ if(!isset($_SESSION['userdata'])){
   </div>
 </nav>
 </div>
-
 </body>
 </html>
