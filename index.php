@@ -1,5 +1,10 @@
 <?php 
     session_start(); 
+    $email = $password = '';
+    if(!empty($_COOKIE['email']) && !empty($_COOKIE['password'])){
+        $email = $_COOKIE['email'];
+        $password = $_COOKIE['password'];
+    }
     if(isset($_SESSION['userdata'])){
         header("location: dashboard.php");
         die();
@@ -45,17 +50,18 @@
             <?= (isset($_SESSION['not_found'])) ? $_SESSION['not_found'] : ''; ?> 
                 <?php unset($_SESSION['not_found']); ?>
             <form action="LoginProcess.php" method="post" id="myform">
-            
+            <label for="username">Email Address</label>
               <div class="form-group first">
-              <label for="username">Email Address</label>
+              
                 <input type="email" class="form-control" name= "email" id="email" required>
                 </div>
                 <?= (isset($_SESSION['email'])) ? $_SESSION['email'] : ''; ?> 
                 <?php unset($_SESSION['email']); ?>
               
               <br>
+              <label for="password">Password</label>
               <div class="form-group last mb-3">
-                <label for="password">Password</label>
+                
                 <input type="password" class="form-control" name="password" id="password" required>
               </div>
               <?= (isset($_SESSION['password'])) ? $_SESSION['password'] : ''; ?> 
@@ -63,24 +69,19 @@
 
                <div class="d-flex mb-5 align-items-center">
                 <label class="control control--checkbox mb-0"><span class="caption">Remember me</span>
-                  <input type="checkbox" name="remember_me" checked="checked"/>
+                  <input type="checkbox" id="remember_me" name="remember_me" checked onclick = "RememberPass()"/>
                   <div class="control__indicator"></div>
                 </label>
                 <!-- <span class="ml-auto"><a href="#" class="forgot-pass">Forgot Password</a></span>   -->
               </div>
-
               <input type="submit" value="Log In" class="btn btn-block btn-primary">              
             </form>
           </div>
         </div>
       </div>
     </div>
-
-    
   </div>
-    
-    
-
+  
     <script src="js/jquery-3.3.1.min.js"></script>
     <script src="js/popper.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
@@ -90,4 +91,17 @@
 </html>
 <script>
      $("#myform").validate();
+
+     function RememberPass(){
+        let checked = document.getElementById("remember_me").checked;
+        if(checked == true){
+            document.getElementById('email').value = '<?= $email; ?>';
+            document.getElementById('password').value = '<?= $password; ?>';
+        }else{
+            document.getElementById('email').value = '';
+            document.getElementById('password').value = '';
+        }
+     }
+     RememberPass();
+
 </script>
